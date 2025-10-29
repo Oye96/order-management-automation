@@ -1,0 +1,1192 @@
+{
+  "name": "ProductOrder Store",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Product Order Form",
+        "formDescription": "Place your order below. You’ll get an instant confirmation email once it’s received.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Full Name",
+              "placeholder": "Please enter your full name.",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Email Address",
+              "placeholder": "We will send your confirmation here.",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Phone Number"
+            },
+            {
+              "fieldLabel": "Products",
+              "placeholder": "List products you would love to order",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Quantity",
+              "fieldType": "number"
+            },
+            {
+              "fieldLabel": "Delivery Address"
+            },
+            {
+              "fieldLabel": "Note"
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        16,
+        -32
+      ],
+      "id": "2d4c0d53-9683-4a86-bf47-7615e4c889cb",
+      "name": "Product Order Form",
+      "webhookId": "1660cc50-18c6-4686-bfbb-383ff82f8c3f"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1GUsY11rioRcZ_y9ml-uhb8FIHrkg2sp1OdsBsOVV9pw",
+          "mode": "list",
+          "cachedResultName": "Order Record",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1GUsY11rioRcZ_y9ml-uhb8FIHrkg2sp1OdsBsOVV9pw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1GUsY11rioRcZ_y9ml-uhb8FIHrkg2sp1OdsBsOVV9pw/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Email Address",
+              "lookupValue": "={{ $json['Email Address'] }}"
+            }
+          ]
+        },
+        "options": {
+          "dataLocationOnSheet": {
+            "values": {
+              "rangeDefinition": "detectAutomatically"
+            }
+          },
+          "outputFormatting": {
+            "values": {
+              "general": "UNFORMATTED_VALUE",
+              "date": "FORMATTED_STRING"
+            }
+          },
+          "returnFirstMatch": true
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        528,
+        -32
+      ],
+      "id": "562578e9-314a-4631-b6e5-6bb6dd5bf0fa",
+      "name": "Read Latest Order",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "pVv7wxtorSaE8z70",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1GUsY11rioRcZ_y9ml-uhb8FIHrkg2sp1OdsBsOVV9pw",
+          "mode": "list",
+          "cachedResultName": "Order Record",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1GUsY11rioRcZ_y9ml-uhb8FIHrkg2sp1OdsBsOVV9pw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1GUsY11rioRcZ_y9ml-uhb8FIHrkg2sp1OdsBsOVV9pw/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Full Name": "={{ $json['Full Name'] }}",
+            "Email Address": "={{ $json['Email Address'] }}",
+            "Phone Number": "={{ $json['Phone Number'] }}",
+            "Products": "={{ $json.Products }}",
+            "Quantity": "={{ $json.Quantity }}",
+            "Delivery Address": "={{ $json['Delivery Address'] }}",
+            "Note": "={{ $json.Note }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Full Name",
+              "displayName": "Full Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email Address",
+              "displayName": "Email Address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Phone Number",
+              "displayName": "Phone Number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Products",
+              "displayName": "Products",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Quantity",
+              "displayName": "Quantity",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Price",
+              "displayName": "Price",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Total",
+              "displayName": "Total",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Delivery Address",
+              "displayName": "Delivery Address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Note",
+              "displayName": "Note",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Order_id",
+              "displayName": "Order_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Processed",
+              "displayName": "Processed",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        272,
+        -32
+      ],
+      "id": "d058c3cf-915f-45aa-b309-78764e3de77a",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "pVv7wxtorSaE8z70",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "7020351196",
+        "text": "=  *New Order Received!*\n\n*Here are the details of your order:*\n\n  Order ID: {{ $json.order_id }}\n  Customer: {{$json[\"full_name\"]}} \n  Email: {{ $json['Email Address'] }}\n  Phone: {{$json[\"Phone Number\"]}} \n  Product: {{$json[\"Products\"]}} (x{{$json[\"Quantity\"]}}) \n  Price: {{ $json.Price }}\n  Total Amount: {{ $json.Total }}\n  Delivery Address: {{ $json['Delivery Address'] }}\n  Note: {{$json[\"Note\"]}} \n  Ordered At: {{$json[\"timestamp\"]}}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1600,
+        -16
+      ],
+      "id": "722c8be6-4b09-46ed-9dab-aa6d766c0083",
+      "name": "Send a text message",
+      "webhookId": "84f0bab1-bfc0-4d8d-a051-51721efea153",
+      "credentials": {
+        "telegramApi": {
+          "id": "e2LYx4jDlavskRHT",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Order Info').item.json['Email Address'] }}\n",
+        "subject": "=Your Order Has Been Received – {{ $('Order Info').item.json.order_id }}",
+        "message": "=Hi {{ $('Order Info').item.json.full_name }},<br><br>\n\nThank you for shopping with Trendova! 🎉<br><br>\n\nHere are the details of your order:<br><br>\n\n   Order ID: {{ $('Order Info').item.json.order_id }}<br>\n   Product: {{ $('Order Info').item.json.Products }} (x{{ $('Order Info').item.json.Quantity }})<br>\n   Price: ${{ $('Order Info').item.json.Price }}<br>\n   Total Amount: ${{ $('Order Info').item.json.Total }}<br>\n🏠 Delivery Address: {{ $('Order Info').item.json['Delivery Address'] }}<br>\n🕒 Ordered At: {{ $('Order Info').item.json.timestamp }}<br><br>\n\nYour order will be processed shortly and delivered to your address soon.<br><br>\n\nWe’ll keep you updated once it’s on the way.<br><br>\n\nWarm regards,  <br>\n{{ $json[\"StoreName\"] || \"Trendova\" }}",
+        "options": {
+          "appendAttribution": false,
+          "bccList": "ibrahimaiautomation@gmail.com"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1792,
+        -16
+      ],
+      "id": "8190bc56-5fe6-40c8-9eb7-6482d32b38ae",
+      "name": "Send Confirmation Email",
+      "webhookId": "e6e44d9e-1519-49f9-90b0-25b52774457a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "slXfsXVAMN3JQizk",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "17gld0BYl39yecGNPtoIXKClr6d8Zf7iUsBqgp9HaVro",
+          "mode": "list",
+          "cachedResultName": "Products Database",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17gld0BYl39yecGNPtoIXKClr6d8Zf7iUsBqgp9HaVro/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/17gld0BYl39yecGNPtoIXKClr6d8Zf7iUsBqgp9HaVro/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Products",
+              "lookupValue": "={{ $('Product Order Form').item.json.Products }}"
+            }
+          ]
+        },
+        "options": {
+          "dataLocationOnSheet": {
+            "values": {
+              "rangeDefinition": "detectAutomatically"
+            }
+          },
+          "outputFormatting": {
+            "values": {
+              "general": "UNFORMATTED_VALUE",
+              "date": "FORMATTED_STRING"
+            }
+          },
+          "returnFirstMatch": true
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        784,
+        -32
+      ],
+      "id": "777d4a67-ba00-4c5e-b1a3-4fbd24a13c6a",
+      "name": "Get Products",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "pVv7wxtorSaE8z70",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "334937ec-a9a5-40e6-b079-4c6bfcbe5a22",
+              "name": "Pice",
+              "value": "={{ $json.Price }}",
+              "type": "number"
+            },
+            {
+              "id": "9880718d-fcf9-4e72-bb11-4e25b8a4de41",
+              "name": "Total",
+              "value": "={{ Number($node[\"Get Products\"].json[\"Price\"] || 0) * Number($node[\"Read Latest Order\"].json[\"Quantity\"] || 0) }}\n",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1232,
+        -16
+      ],
+      "id": "4fefa381-1448-4df4-9242-01aef42d240f",
+      "name": "Amount"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "cd65e47e-0db5-452f-b2d3-c0e47f8b2cf3",
+              "leftValue": "={{ $json[\"Stock\"] }}",
+              "rightValue": 5,
+              "operator": {
+                "type": "number",
+                "operation": "lt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        992,
+        -32
+      ],
+      "id": "217ae31a-0a9a-4b77-8d4d-f2858aaf7ce8",
+      "name": "Check Low Products"
+    },
+    {
+      "parameters": {
+        "chatId": "7020351196",
+        "text": "= ⚠️ Low Stock Alert!\n\nProduct: {{ $json[\"Products\"] }}\nRemaining Stock: {{ $('Check Low Products').item.json.Stock }}\nPlease restock as soon as possible.\n\n\n*New Order Received!*\n\n  Order ID: {{ $json.order_id }}\n  Customer: {{$json[\"full_name\"]}} \n  Email: {{ $json['Email Address'] }}\n  Phone: {{$json[\"Phone Number\"]}} \n  Product: {{$json[\"Products\"]}} (x{{$json[\"Quantity\"]}}) \n  Price: {{ $('Check Low Products').item.json.Price }}\n  Total Amount: {{ $json.Total }}\n  Delivery Address: {{ $json['Delivery Address'] }}\n  Note: {{$json[\"Note\"]}} \n  Ordered At: {{$json[\"timestamp\"]}}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "Markdown"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1600,
+        -224
+      ],
+      "id": "38dfbe88-a73b-4023-8109-2cae310b0711",
+      "name": "Low Stock Notification",
+      "webhookId": "84f0bab1-bfc0-4d8d-a051-51721efea153",
+      "credentials": {
+        "telegramApi": {
+          "id": "e2LYx4jDlavskRHT",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "334937ec-a9a5-40e6-b079-4c6bfcbe5a22",
+              "name": "Price",
+              "value": "={{ $json.Price }}",
+              "type": "number"
+            },
+            {
+              "id": "9880718d-fcf9-4e72-bb11-4e25b8a4de41",
+              "name": "Total",
+              "value": "={{ Number($node[\"Get Products\"].json[\"Price\"] || 0) * Number($node[\"Read Latest Order\"].json[\"Quantity\"] || 0) }}\n",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1232,
+        -208
+      ],
+      "id": "fc035556-f82d-419c-9e54-fef93cfba5b9",
+      "name": "LowAmount"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b8b8c6fe-7368-4564-b254-f55ed3f31a92",
+              "name": "=full_name",
+              "value": "={{ $('Read Latest Order').item.json['Full Name'] }}",
+              "type": "string"
+            },
+            {
+              "id": "c2e45cc3-0dff-4cde-bfce-36969f69ba4c",
+              "name": "Email Address",
+              "value": "={{ $('Read Latest Order').item.json['Email Address'] }}",
+              "type": "string"
+            },
+            {
+              "id": "61ce8bfd-d5ef-4867-af69-2b547d9969d9",
+              "name": "Phone Number",
+              "value": "={{ $('Read Latest Order').item.json['Phone Number'] }}",
+              "type": "number"
+            },
+            {
+              "id": "510d19fe-62e4-43fb-8ee1-7647cfe064be",
+              "name": "Products",
+              "value": "={{ $('Get Products').item.json.Products }}",
+              "type": "string"
+            },
+            {
+              "id": "34453d86-f9e6-4253-870f-611d07445580",
+              "name": "Quantity",
+              "value": "={{ $('Read Latest Order').item.json.Quantity }}",
+              "type": "number"
+            },
+            {
+              "id": "205fec97-4039-4aa8-b000-f59bbab495a3",
+              "name": "Delivery Address",
+              "value": "={{ $('Read Latest Order').item.json['Delivery Address'] }}",
+              "type": "string"
+            },
+            {
+              "id": "9bf2ffd9-9dda-4459-916c-7c5ad34abad2",
+              "name": "Note",
+              "value": "={{ $('Read Latest Order').item.json.Note }}",
+              "type": "string"
+            },
+            {
+              "id": "cff39374-ed94-42ea-995e-7155328ec9ec",
+              "name": "order_id",
+              "value": "={{\"ORD-\" + Math.floor(Math.random() * 10000)}}",
+              "type": "string"
+            },
+            {
+              "id": "b68f0925-2a2b-4251-83da-52d9c4bcedd4",
+              "name": "timestamp",
+              "value": "={{new Date().toLocaleString()}}",
+              "type": "string"
+            },
+            {
+              "id": "676b0f8c-9816-4a76-8dff-04374f75335c",
+              "name": "Processed",
+              "value": "Yes",
+              "type": "string"
+            },
+            {
+              "id": "af3d9389-bb1d-4e99-b914-3e970db05961",
+              "name": "Price",
+              "value": "={{ $json.Pice }}",
+              "type": "number"
+            },
+            {
+              "id": "234ee421-74a8-43b0-9a9e-62b3922d3dd8",
+              "name": "Total",
+              "value": "={{ $json.Total }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1408,
+        -224
+      ],
+      "id": "3e2319e4-8446-486a-8cd5-9de6b032938f",
+      "name": "LowStatusInfo"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1GUsY11rioRcZ_y9ml-uhb8FIHrkg2sp1OdsBsOVV9pw",
+          "mode": "list",
+          "cachedResultName": "Order Record",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1GUsY11rioRcZ_y9ml-uhb8FIHrkg2sp1OdsBsOVV9pw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1GUsY11rioRcZ_y9ml-uhb8FIHrkg2sp1OdsBsOVV9pw/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Order_id": "={{ $('LowStatusInfo').item.json.order_id }}",
+            "Processed": "={{ $('LowStatusInfo').item.json.Processed }}",
+            "Email Address": "={{ $('LowStatusInfo').item.json['Email Address'] }}",
+            "Total": "={{ $('LowStatusInfo').item.json.Total }}",
+            "Price": "={{ $('LowAmount').item.json.Price }}"
+          },
+          "matchingColumns": [
+            "Email Address"
+          ],
+          "schema": [
+            {
+              "id": "Full Name",
+              "displayName": "Full Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email Address",
+              "displayName": "Email Address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Phone Number",
+              "displayName": "Phone Number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Products",
+              "displayName": "Products",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Quantity",
+              "displayName": "Quantity",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Price",
+              "displayName": "Price",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Total",
+              "displayName": "Total",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Delivery Address",
+              "displayName": "Delivery Address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Note",
+              "displayName": "Note",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Order_id",
+              "displayName": "Order_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Processed",
+              "displayName": "Processed",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2000,
+        -224
+      ],
+      "id": "92a3064b-de24-4e96-85af-72a90feab45e",
+      "name": "Update Order Record",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "pVv7wxtorSaE8z70",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1GUsY11rioRcZ_y9ml-uhb8FIHrkg2sp1OdsBsOVV9pw",
+          "mode": "list",
+          "cachedResultName": "Order Record",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1GUsY11rioRcZ_y9ml-uhb8FIHrkg2sp1OdsBsOVV9pw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1GUsY11rioRcZ_y9ml-uhb8FIHrkg2sp1OdsBsOVV9pw/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Order_id": "={{ $('Order Info').item.json.order_id }}",
+            "Processed": "={{ $('Order Info').item.json.Processed }}",
+            "Email Address": "={{ $('Order Info').item.json['Email Address'] }}",
+            "Total": "={{ $('Amount').item.json.Total }}",
+            "Price": "={{ $('Amount').item.json.Pice }}"
+          },
+          "matchingColumns": [
+            "Email Address"
+          ],
+          "schema": [
+            {
+              "id": "Full Name",
+              "displayName": "Full Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email Address",
+              "displayName": "Email Address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Phone Number",
+              "displayName": "Phone Number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Products",
+              "displayName": "Products",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Quantity",
+              "displayName": "Quantity",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Price",
+              "displayName": "Price",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Total",
+              "displayName": "Total",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Delivery Address",
+              "displayName": "Delivery Address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Note",
+              "displayName": "Note",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Order_id",
+              "displayName": "Order_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Processed",
+              "displayName": "Processed",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Total",
+              "displayName": "Total",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1984,
+        -16
+      ],
+      "id": "ed2a498c-d7fd-42a7-81c4-307cd36edd39",
+      "name": "Update Order",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "pVv7wxtorSaE8z70",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Append row in sheet').item.json['Email Address'] }}\n",
+        "subject": "=Order Confirmation — {{ $('LowStatusInfo').item.json.order_id }}",
+        "message": "=Hi {{ $('LowStatusInfo').item.json.full_name }}, <br>  <br> \n\nThank you for shopping with Trendova! 🎉<br><br>\n\nHere are the details of your order:<br><br>\n\n🆔 Order ID: {{ $('LowStatusInfo').item.json.order_id }} <br>  \n📦 Product: {{ $('LowStatusInfo').item.json.Products }} (x{{ $('LowStatusInfo').item.json.Quantity }})  <br> \n💰 Total Amount: ${{ $('LowAmount').item.json.Total }}   <br> <br>\n\nYour order will soon be delivered to {{ $('Append row in sheet').item.json['Delivery Address'] }}. \n<br><br>\n\nWe’ll contact you shortly with your delivery details.  \n <br>  <br> \n\nWarm regards,   <br>\n{{ $json[\"StoreName\"] || \"Trendova\" }}\n\n",
+        "options": {
+          "appendAttribution": false,
+          "bccList": "ibrahimaiautomation@gmail.com"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1792,
+        -224
+      ],
+      "id": "1f405440-b5c0-4021-9e51-d77dd3e224f0",
+      "name": "Send Email",
+      "webhookId": "e6e44d9e-1519-49f9-90b0-25b52774457a",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "slXfsXVAMN3JQizk",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b8b8c6fe-7368-4564-b254-f55ed3f31a92",
+              "name": "=full_name",
+              "value": "={{ $('Read Latest Order').item.json['Full Name'] }}",
+              "type": "string"
+            },
+            {
+              "id": "c2e45cc3-0dff-4cde-bfce-36969f69ba4c",
+              "name": "Email Address",
+              "value": "={{ $('Read Latest Order').item.json['Email Address'] }}",
+              "type": "string"
+            },
+            {
+              "id": "61ce8bfd-d5ef-4867-af69-2b547d9969d9",
+              "name": "Phone Number",
+              "value": "={{ $('Read Latest Order').item.json['Phone Number'] }}",
+              "type": "number"
+            },
+            {
+              "id": "510d19fe-62e4-43fb-8ee1-7647cfe064be",
+              "name": "Products",
+              "value": "={{ $('Get Products').item.json.Products }}",
+              "type": "string"
+            },
+            {
+              "id": "34453d86-f9e6-4253-870f-611d07445580",
+              "name": "Quantity",
+              "value": "={{ $('Read Latest Order').item.json.Quantity }}",
+              "type": "number"
+            },
+            {
+              "id": "205fec97-4039-4aa8-b000-f59bbab495a3",
+              "name": "Delivery Address",
+              "value": "={{ $('Read Latest Order').item.json['Delivery Address'] }}",
+              "type": "string"
+            },
+            {
+              "id": "9bf2ffd9-9dda-4459-916c-7c5ad34abad2",
+              "name": "Note",
+              "value": "={{ $('Read Latest Order').item.json.Note }}",
+              "type": "string"
+            },
+            {
+              "id": "cff39374-ed94-42ea-995e-7155328ec9ec",
+              "name": "order_id",
+              "value": "={{\"ORD-\" + Math.floor(Math.random() * 10000)}}",
+              "type": "string"
+            },
+            {
+              "id": "b68f0925-2a2b-4251-83da-52d9c4bcedd4",
+              "name": "timestamp",
+              "value": "={{new Date().toLocaleString()}}",
+              "type": "string"
+            },
+            {
+              "id": "676b0f8c-9816-4a76-8dff-04374f75335c",
+              "name": "Processed",
+              "value": "Yes",
+              "type": "string"
+            },
+            {
+              "id": "af3d9389-bb1d-4e99-b914-3e970db05961",
+              "name": "Price",
+              "value": "={{ $json.Pice }}",
+              "type": "number"
+            },
+            {
+              "id": "234ee421-74a8-43b0-9a9e-62b3922d3dd8",
+              "name": "Total",
+              "value": "={{ $json.Total }}",
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1408,
+        -16
+      ],
+      "id": "fe56bf0a-4930-4bf8-bb8a-9a41807ea58f",
+      "name": "Order Info"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Product Order Form": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Read Latest Order",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Latest Order": {
+      "main": [
+        [
+          {
+            "node": "Get Products",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a text message": {
+      "main": [
+        [
+          {
+            "node": "Send Confirmation Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Confirmation Email": {
+      "main": [
+        [
+          {
+            "node": "Update Order",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Products": {
+      "main": [
+        [
+          {
+            "node": "Check Low Products",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Amount": {
+      "main": [
+        [
+          {
+            "node": "Order Info",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Low Products": {
+      "main": [
+        [
+          {
+            "node": "LowAmount",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Amount",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Low Stock Notification": {
+      "main": [
+        [
+          {
+            "node": "Send Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LowAmount": {
+      "main": [
+        [
+          {
+            "node": "LowStatusInfo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "LowStatusInfo": {
+      "main": [
+        [
+          {
+            "node": "Low Stock Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Email": {
+      "main": [
+        [
+          {
+            "node": "Update Order Record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Order Info": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "4528b8af-710a-4393-a415-d13e3932690c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "bef6f9ee4374fc61a23d239d5ed771361ebab139c5adbde9ce1fc5dcf09d490d"
+  },
+  "id": "A2qLImkDGuBy3QPB",
+  "tags": []
+}
